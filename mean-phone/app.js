@@ -30,13 +30,35 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/contactlist', function (req, res) {
+
+//GET request router
+app.get('/contactlist', function (req, res) {
 	console.log("a GET request has been made from the controller");
 	
 	db.contactlist.find(function (err, docs) {
 		console.log(docs);
 		res.json(docs);
 		});
+	});
+	
+//POST request router
+app.post('/contactlist', function(req, res) {
+	console.log("a POST request has been made from the view to the controller to the database to store");
+	console.log(req.body);
+	
+	db.contactlist.insert(req.body, function (err, doc) {
+		console.log("document inserted into mongodb, now sending doc back to controller");
+		res.json(doc);
+		});
+	});
+	
+//DELETE request router
+app.delete('/contactlist/:id', function (req, res) {
+	var id = req.params.id;
+	console.log(id);
+	db.contactlist.remove({_id: mongojs.ObjectId(id)}, function(err, doc) {
+	res.json(doc);
+	});
 	});
 
 // catch 404 and forward to error handler
