@@ -1,0 +1,34 @@
+<!doctype html>
+<html ng-app="phoneApp">
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<title>Contact List App</title>
+<div class="container" ng-controller="AppCtrl">
+<h1>Contact List Tutorial from Youtube</h1>
+
+<table class="table">
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Number</th>
+</tr>
+</thead>
+<tbody>
+<tr ng-repeat="contact in contactlist">
+<td>{{contact.name}}</td>
+<td>{{contact.email}}</td>
+<td>{{contact.number}}</td>
+</tr>
+</tbody>
+</table>
+</div>
+</head>
+<body>
+<input ng-model="test">
+{{test}}
+<p>Welcome to the Body</p>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="./javascripts/controller.js"></script>
+</body>
+</html>
