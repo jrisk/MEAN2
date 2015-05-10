@@ -41,6 +41,20 @@ app.get('/contactlist', function (req, res) {
 		});
 	});
 	
+//GET editing request router
+app.get('/contactlist/:id', function (req, res) {
+	console.log("a GET request to edit a contact has been made");
+	
+	var id = req.params.id;
+	
+	console.log(id);
+	
+	db.contactlist.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
+		console.log(doc);
+		res.json(doc);
+	})
+	});
+		
 //POST request router
 app.post('/contactlist', function(req, res) {
 	console.log("a POST request has been made from the view to the controller to the database to store");
@@ -59,6 +73,19 @@ app.delete('/contactlist/:id', function (req, res) {
 	db.contactlist.remove({_id: mongojs.ObjectId(id)}, function(err, doc) {
 	res.json(doc);
 	});
+	});
+	
+//PUT request router
+app.put('/contactlist/:id', function (req, res) {
+	var id = req.params.id;
+	console.log(req.body.name);
+	
+	db.contactlist.findAndModify({ query: {_id: mongojs.ObjectId(id)},
+	update: {$set: {name: req.body.name, number: req.body.number, email: req.body.email}},
+	new: true}, function (err, doc) {
+		res.json(doc);
+	});
+	
 	});
 
 // catch 404 and forward to error handler
